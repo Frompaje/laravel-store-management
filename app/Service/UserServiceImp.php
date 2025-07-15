@@ -2,13 +2,16 @@
 
 namespace App\Service;
 
-class UserServiceImp
+use App\Dto\UserCreateDto;
+use App\Interface\UserServiceInt;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+
+class UserServiceImp implements UserServiceInt
 {
-    /**
-     * Create a new class instance.
-     */
-    public function __construct()
+    public function create(UserCreateDto $input)
     {
-        //
+        $input['password'] = Hash::make($input['password']);
+        User::create($input);
     }
 }

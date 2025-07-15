@@ -5,7 +5,7 @@ namespace App\Dto;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 
-class UserControllerDto
+class UserCreateDto
 {
     /**
      * Nome do usuario.

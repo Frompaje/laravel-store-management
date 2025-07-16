@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Dto;
+namespace App\Http\Dto;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -11,28 +11,26 @@ class UserCreateDto
      * Nome do usuario.
      * @var String
      */
-    private $name;
+    public $name;
 
     /**
      * Senha do usuario
      * @var String
      */
-    private $password;
+    public $password;
 
     /**
      * Repeat-password para fazer match de senha
      * @var String
      */
-    private $repeatPassword;
+    public $repeatPassword;
 
 
     /**
      * Repeat-password para fazer match de senha
      * @var String
      */
-    private $email;
-
-
+    public $email;
 
     /**
      * Create a new class instance.
@@ -48,7 +46,6 @@ class UserCreateDto
         $this->repeatPassword = $input['repeatPassword'];
     }
 
-
     public function validator(array $input)
     {
 
@@ -56,22 +53,23 @@ class UserCreateDto
             $input,
             [
                 'name' => ['required', 'string'],
-                'passwoord' => ['required', 'string'],
-                'repeatPasswoord' => ['required', 'string', 'same:password']
+                'email' => ['required', 'email', 'unique:users,email'],
+                'password' => ['required', 'string', 'min:8'],
+                'repeatPassword' => ['required', 'string', 'same:password'],
+
             ],
             [
                 'name.required' => 'O usuario precisa de um nome',
+                'email.required' => 'O email é obrigatório',
+                'email.email' => 'O email deve ser um endereço de email válido',
                 'password.required' => 'Você precisa enviar a senha',
-                'password.same' => 'A senha precisa ser a mesma'
+                'password.min' => 'A senha deve ter pelo menos 8 caracteres',
+                'password.confirmed' => 'A confirmação da senha não corresponde',
             ]
         );
 
         if ($validator->fails()) {
-            return $validator->errors();
-
-            throw ValidationException::withMessages([
-                'validation_errors' => $validator->errors()
-            ]);
+            throw new ValidationException($validator);
         }
     }
 }

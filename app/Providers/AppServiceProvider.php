@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Interface\UserServiceInt;
 use App\Service\UserServiceImp;
 use Illuminate\Support\ServiceProvider;
 
@@ -12,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-     $this->app->bind(UserServiceImp::class, UserServiceImp::class);
+     $this->app->bind(UserServiceInt::class, UserServiceImp::class);
     }
 
     /**

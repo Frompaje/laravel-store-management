@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Dto\UserCreateDto;
+use App\Http\Dto\UserCreateDto;
 use App\Interface\UserServiceInt;
+use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -14,11 +17,29 @@ class UserController extends Controller
     {
         $this->service = $serviceInt;
     }
-    public function create(Request $request){
-        $dto = new UserCreateDto($request->all());
 
-        $response = $this->service->create($dto);
+    public function create(Request $request)
+    {
+        try {
+            Log::info('Creating user with data: ', $request->all());
+            $dto = new UserCreateDto($request->all());
 
-        return response()->json(['message'=>'usuario criado com sucesso',201]);
+            $response = $this->service->create($dto);
+
+            if(!$response['isSucess']) {
+                return response()->json([
+                    'error' => $response['message']
+                ], 400);
+            }
+
+            return response()->json([
+                'message' => $response['message'],
+                'data' => $response['data']
+            ], 201);
+        } catch (ValidationException $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
     }
 }

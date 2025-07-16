@@ -2,7 +2,7 @@
 
 namespace App\Interface;
 
-use App\Dto\UserCreateDto;
+use App\Http\Dto\UserCreateDto;
 
 interface UserServiceInt
 {

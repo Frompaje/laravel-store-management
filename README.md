@@ -43,13 +43,17 @@ Ao desenvolver esse sistema de **gestão de produtos e controle de estoque**, o 
 ---
 
 ## 📁 Estrutura do Projeto
-- AJEITAR NO FUTURO ESSA ARCH
-- `app/Http/Controllers/Api` — Controllers da API  
-- `app/Models` — Models Eloquent  
-- `app/Services` — Camada de regras de negócio  
-- `app/Jobs` — Jobs para RabbitMQ  
-- `routes/api.php` — Rotas REST  
-- `database/migrations` — Estrutura do banco  
-- `database/seeders` — Dados iniciais  
-- `tests/` — Testes unitários e de integração
+
+> ⚠️ **AJEITAR NO FUTURO ESSA ARCH** — Esta estrutura ainda será revisada e melhorada conforme o projeto evoluir.
+
+- `app/Http/Controllers/Api/` — Controllers da API RESTful, responsáveis por lidar com requisições HTTP.
+- `app/Models/` — Models Eloquent que representam e interagem com as tabelas do banco de dados.
+- `app/Services/` — Camada de regras de negócio, separando a lógica dos controllers.
+- `app/Jobs/` — Jobs para execução assíncrona, como envios via RabbitMQ.
+- `app/Http/Dto/` — DTOs (Data Transfer Objects), utilizados para transferir dados entre camadas de forma segura.
+- `app/Interface/` — Interfaces que definem contratos para serviços, repositórios e outras abstrações.
+- `routes/api.php` — Arquivo de definição das rotas REST da API.
+- `database/migrations/` — Arquivos de versionamento da estrutura do banco de dados.
+- `database/seeders/` — Carga inicial de dados no banco, usada para desenvolvimento e testes.
+- `tests/` — Testes unitários e de integração que garantem a estabilidade do código.
 

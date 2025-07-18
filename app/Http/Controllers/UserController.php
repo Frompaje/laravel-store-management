@@ -13,7 +13,7 @@ class UserController extends Controller
 {
 
     private UserServiceInt $service;
-    public function __construct(UserServiceInt $serviceInt)
+    public function __construct(private readonly UserServiceInt $serviceInt)
     {
         $this->service = $serviceInt;
     }

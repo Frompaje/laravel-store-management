@@ -6,6 +6,7 @@ use App\Http\Dto\UserCreateDto;
 use App\Interface\UserServiceInt;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserServiceImp implements UserServiceInt
 {
@@ -13,6 +14,7 @@ class UserServiceImp implements UserServiceInt
     {
         try {
             $user = User::create([
+                'uuid' => Str::uuid()->toString(),
                 'name' => $input->name,
                 'email' => $input->email,
                 'password' => Hash::make($input->password),
